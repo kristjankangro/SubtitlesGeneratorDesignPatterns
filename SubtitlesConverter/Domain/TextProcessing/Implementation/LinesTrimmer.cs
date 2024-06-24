@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SubtitlesConverter.Domain
+namespace SubtitlesConverter.Domain.TextProcessing.Implementation
 {
     public class LinesTrimmer : ITextProcessor
     {

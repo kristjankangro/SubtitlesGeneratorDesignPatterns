@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using SubtitlesConverter.Domain.TextProcessing;
 
-namespace SubtitlesConverter.Domain
+namespace SubtitlesConverter.Domain.Models
 {
     class Subtitles
     {
@@ -14,21 +13,6 @@ namespace SubtitlesConverter.Domain
         public Subtitles(IEnumerable<SubtitleLine> lines)
         {
             Lines = lines.ToList();
-        }
-
-        public static Subtitles Parse(string[] text, TimeSpan clipDuration)
-        {
-            ITextProcessor parsing = new LinesTrimmer()
-                    .Then(new SentenceBreaker())
-                    .Then(new LinesBreaker(95, 45));
-            
-            var lines = parsing.Execute(text).ToList();
-
-            TextDurationMeter durationMeter = new TextDurationMeter(lines, clipDuration);
-            IEnumerable<SubtitleLine> subtitles = lines
-                .Select(line => (text: line, duration: durationMeter.EstimateDuration(line)))
-                .Select(tuple => new SubtitleLine(tuple.text, tuple.duration));
-            return new Subtitles(subtitles);
         }
 
         public void SaveAsSrt(FileInfo destination) =>

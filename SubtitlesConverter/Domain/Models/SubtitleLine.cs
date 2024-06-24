@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SubtitlesConverter.Domain
+namespace SubtitlesConverter.Domain.Models
 {
     class SubtitleLine
     {

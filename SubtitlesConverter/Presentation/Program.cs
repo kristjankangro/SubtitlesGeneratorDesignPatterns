@@ -3,8 +3,10 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using SubtitlesConverter.Domain;
+using SubtitlesConverter.Domain.Models;
+using SubtitlesConverter.Domain.TextProcessing.Implementation;
 
-namespace TextToSrt.Presentation
+namespace SubtitlesConverter.Presentation
 {
     class Program
     {
@@ -26,7 +28,12 @@ namespace TextToSrt.Presentation
             try
             {
                 string[] text = File.ReadAllLines(source.FullName);
-                Subtitles subtitles = Subtitles.Parse(text, clipDuration);
+                TimedText timed = new TimedText(text, clipDuration);
+                Subtitles subtitles = new SubtitlesBuilder().For(timed)
+                    .Using(new LinesTrimmer())
+                    .Using(new SentenceBreaker())
+                    .Using(new LinesBreaker(95,45))
+                    .Build();
                 subtitles.SaveAsSrt(destination);
             }
             catch (Exception ex)

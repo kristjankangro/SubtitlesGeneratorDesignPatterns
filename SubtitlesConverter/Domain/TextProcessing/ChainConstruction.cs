@@ -1,3 +1,4 @@
+
 namespace SubtitlesConverter.Domain.TextProcessing
 {
     static class ChainConstruction

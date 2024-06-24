@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using SubtitlesConverter.Common;
 
-namespace SubtitlesConverter.Domain
+namespace SubtitlesConverter.Domain.TextProcessing.Implementation
 {
     class SentenceBreaker : ITextProcessor
     {
