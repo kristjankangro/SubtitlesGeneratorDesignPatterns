@@ -1,0 +1,16 @@
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.csproj.AssemblyReference.cache
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.AssemblyInfoInputs.cache
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.AssemblyInfo.cs
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.csproj.CoreCompileInputs.cache
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\data\audio.mp3
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\data\script.txt
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\data\demo.camproj
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\SubtitlesConverter.deps.json
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\SubtitlesConverter.runtimeconfig.json
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\SubtitlesConverter.runtimeconfig.dev.json
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\SubtitlesConverter.dll
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\bin\Debug\netcoreapp2.1\SubtitlesConverter.pdb
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.dll
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.pdb
+C:\Users\kristjan\RiderProjects\M01-C01-Code (1)\SubtitlesConverter\obj\Debug\netcoreapp2.1\SubtitlesConverter.genruntimeconfig.cache
