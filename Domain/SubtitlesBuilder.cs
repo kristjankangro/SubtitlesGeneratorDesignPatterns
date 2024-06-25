@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using SubtitlesConverter.Domain.Models;
-using SubtitlesConverter.Domain.TextProcessing;
+using Domain.Models;
+using Domain.TextProcessing;
 
-namespace SubtitlesConverter.Domain
+namespace Domain
 {
-    class SubtitlesBuilder
+    public class SubtitlesBuilder
     {
         private TimedText Text { get; set; } = TimedText.Empy;
         private ITextProcessor Processing { get; set; } = new DoNothing();

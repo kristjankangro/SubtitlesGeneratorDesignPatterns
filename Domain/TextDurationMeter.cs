@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using SubtitlesConverter.Domain.Models;
+﻿using System.Text.RegularExpressions;
+using Domain.Models;
 
-namespace SubtitlesConverter.Domain
+namespace Domain
 {
     internal class TextDurationMeter
     {

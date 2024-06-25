@@ -2,8 +2,9 @@
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using SubtitlesConverter.Domain;
-using SubtitlesConverter.Domain.Models;
+using Domain;
+using Domain.Models;
+using Domain.TextProcessing.Implementation;
 using SubtitlesConverter.Domain.TextProcessing.Implementation;
 
 namespace SubtitlesConverter.Presentation

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using SubtitlesConverter.Common;
 
-namespace SubtitlesConverter.Domain.TextProcessing.Implementation
+namespace Domain.TextProcessing.Implementation
 {
-    class LinesBreaker : ITextProcessor
+    public class LinesBreaker : ITextProcessor
     {
         private readonly int MaxBreakLength;
         private readonly int MinBreakLenght;

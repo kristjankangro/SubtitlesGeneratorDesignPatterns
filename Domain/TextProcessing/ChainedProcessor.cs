@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+using SubtitlesConverter.Domain;
 
-namespace SubtitlesConverter.Domain.TextProcessing
+namespace Domain.TextProcessing
 {
     public class ChainedProcessor : ITextProcessor
     {

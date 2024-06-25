@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Domain.TextProcessing;
 
-namespace SubtitlesConverter.Domain.Models
+namespace Domain.Models
 {
     public class TimedText
     {

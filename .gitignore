@@ -1,7 +1,3 @@
 /.idea/**/*
-/SubtitlesConverter/bin
-/SubtitlesConverter/obj
-/Common/bin
-/Common/obj
-/bin
-/obj
+/**/bin
+/**/obj

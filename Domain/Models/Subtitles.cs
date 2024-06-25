@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
-namespace SubtitlesConverter.Domain.Models
+namespace Domain.Models
 {
-    class Subtitles
+    public class Subtitles
     {
         private IEnumerable<SubtitleLine> Lines { get; }
 
