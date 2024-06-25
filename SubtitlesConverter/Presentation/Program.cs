@@ -43,7 +43,7 @@ namespace SubtitlesConverter.Presentation
             }
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (Verify(args))
                 Process(new FileInfo(args[0]), new FileInfo(args[1]), TimeSpan.Parse(args[2]));
