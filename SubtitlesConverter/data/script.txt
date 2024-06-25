@@ -1,4 +1,5 @@
-﻿I will start filling the missing types and compiler will be of great help in that effort, as always.
+﻿00:02
+I will start filling the missing types and compiler will be of great help in that effort, as always.
 Static class named partitionings will be the first one to add. Its sole purpose is to expose a convenient factory function which creates some generic partitionings class:
 This reveals the next missing element, the generic class which will hold all the possible partitionings of a sequence:
 The duty of this class is to return all partitionings. Good. The All method will return a sequence of partitioning objects.
@@ -33,3 +34,4 @@ My next task is to implement data partitioning. It will be another non-trivial t
 Every feature in my design is starting from exactly one entry point and then it delegates where appropriate and combines the results.
 Problem decomposition is the name for that practice, and it has served me well through the entire course.
 I am sure that I will be able to decompose this partitioning problem into smaller subproblems and solve them easily one after another. Keep watching.
+05:28

@@ -4,7 +4,7 @@ namespace Domain.Models
 {
     public class TimedText
     {
-        public static TimedText Empy { get; } = new TimedText(Enumerable.Empty<string>(), TimeSpan.Zero);
+        public static TimedText Empty { get; } = new TimedText(Enumerable.Empty<string>(), TimeSpan.Zero);
         public IEnumerable<string> Content { get; }
         public TimeSpan Duration { get;  }
         public TimedText(IEnumerable<string> content, TimeSpan duration)

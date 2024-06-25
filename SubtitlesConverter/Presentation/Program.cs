@@ -14,23 +14,23 @@ namespace SubtitlesConverter.Presentation
         private static string ToolName => Assembly.GetExecutingAssembly().GetName().Name;
 
         private static string UsageText =>
-            $"{ToolName} <source file>.txt <output file>.srt <clip duration: [hh:]mm:ss[.fff]>";
+            $"{ToolName} <source file>.txt <output file>.srt";
 
         static void ShowUsage() =>
             Console.WriteLine(UsageText);
 
         static bool Verify(string[] args) =>
             args.Length == 3 &&
-            File.Exists(args[0]) && 
-            Regex.IsMatch(args[2], @"\d+:[0-5][0-9]:[0-5][0-9](\.\d+)?");
+            File.Exists(args[0]);
 
-        static void Process(FileInfo source, FileInfo destination, TimeSpan clipDuration)
+        static void Process(FileInfo source, FileInfo destination)
         {
             try
             {
-                string[] text = File.ReadAllLines(source.FullName);
-                TimedText timed = new TimedText(text, clipDuration);
-                Subtitles subtitles = new SubtitlesBuilder().For(timed)
+                // string[] text = File.ReadAllLines(source.FullName);
+                // TimedText timed = new TimedText(text, clipDuration);
+                Subtitles subtitles = new SubtitlesBuilder()
+                    .For(source)
                     .Using(new LinesTrimmer())
                     .Using(new SentenceBreaker())
                     .Using(new LinesBreaker(95,45))
@@ -46,7 +46,7 @@ namespace SubtitlesConverter.Presentation
         private static void Main(string[] args)
         {
             if (Verify(args))
-                Process(new FileInfo(args[0]), new FileInfo(args[1]), TimeSpan.Parse(args[2]));
+                Process(new FileInfo(args[0]), new FileInfo(args[1]));
             else
                 ShowUsage();
         }
