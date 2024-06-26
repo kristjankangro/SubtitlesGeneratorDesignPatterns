@@ -11,8 +11,8 @@ namespace Domain.Models
             Lines = lines.ToList();
         }
 
-        public void SaveAsSrt(FileInfo destination) =>
-            File.WriteAllLines(destination.FullName, GenerateSrtFileContent(), Encoding.UTF8);
+        public void SaveAsSrt(ITextWriter destination) =>
+            destination.Write(GenerateSrtFileContent());
 
         private IEnumerable<string> GenerateSrtFileContent() =>
             GenerateLineBoundaries()

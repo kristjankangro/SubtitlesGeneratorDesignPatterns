@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Domain.TextProcessing.Implementation\Domain.TextProcessing.Implementation.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure.FileSystem\Infrastructure.FileSystem.csproj" />
   </ItemGroup>
 
 </Project>

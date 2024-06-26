@@ -27,15 +27,13 @@ namespace SubtitlesConverter.Presentation
         {
             try
             {
-                // string[] text = File.ReadAllLines(source.FullName);
-                // TimedText timed = new TimedText(text, clipDuration);
                 Subtitles subtitles = new SubtitlesBuilder()
-                    .For(source)
+                    .For(new TextFileReader(source))
                     .Using(new LinesTrimmer())
                     .Using(new SentenceBreaker())
                     .Using(new LinesBreaker(95,45))
                     .Build();
-                subtitles.SaveAsSrt(destination);
+                subtitles.SaveAsSrt(new TextFileWriter(destination));
             }
             catch (Exception ex)
             {

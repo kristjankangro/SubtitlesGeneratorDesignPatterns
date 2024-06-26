@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.TextProcessing.Implementation", "Domain.TextProcessing.Implementation\Domain.TextProcessing.Implementation.csproj", "{EFF1E6EE-380C-46D8-B9FD-1F694D32291C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.FileSystem", "Infrastructure.FileSystem\Infrastructure.FileSystem.csproj", "{2EC372A5-83B4-4A57-B6B3-C1A8E7A4DA52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EFF1E6EE-380C-46D8-B9FD-1F694D32291C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFF1E6EE-380C-46D8-B9FD-1F694D32291C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFF1E6EE-380C-46D8-B9FD-1F694D32291C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC372A5-83B4-4A57-B6B3-C1A8E7A4DA52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC372A5-83B4-4A57-B6B3-C1A8E7A4DA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC372A5-83B4-4A57-B6B3-C1A8E7A4DA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC372A5-83B4-4A57-B6B3-C1A8E7A4DA52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

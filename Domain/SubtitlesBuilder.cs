@@ -28,7 +28,7 @@ namespace Domain
             //     .Then(new SentenceBreaker())
             //     .Then(new LinesBreaker(95, 45));
 
-            TimedText processed = Reader.Read.Apply(Processing);
+            TimedText processed = Reader.Read().Apply(Processing);
             TextDurationMeter durationMeter = new TextDurationMeter(processed);
             IEnumerable<SubtitleLine> subtitles = durationMeter.MeasureLines();
             return new Subtitles(subtitles);
