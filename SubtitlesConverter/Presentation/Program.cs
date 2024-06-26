@@ -27,7 +27,7 @@ namespace SubtitlesConverter.Presentation
         {
             try
             {
-                Subtitles subtitles = new SubtitlesBuilder()
+                var subtitles = new SubtitlesBuilder()
                     .For(new TextFileReader(source))
                     .Using(new LinesTrimmer())
                     .Using(new SentenceBreaker())

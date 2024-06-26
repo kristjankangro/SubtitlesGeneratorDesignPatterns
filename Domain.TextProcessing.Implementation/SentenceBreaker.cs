@@ -5,7 +5,7 @@ namespace Domain.TextProcessing.Implementation
 {
     public class SentenceBreaker : ITextProcessor
     {
-        private IEnumerable<(string pattern, string extract, string remove)> Rules { get; } = new[]
+        private IEnumerable<(string pattern, string extract, string remove)> RuleSpecs { get; } = new[]
         {
             (@"^(?<remove>(?<extract>(\.\.\.|[^\.])+)\.)$", "${extract}", "${remove}"),
             (@"^(?<remove>(?<extract>[^\.]+),)$", "${extract}", "${remove}"),
@@ -14,6 +14,8 @@ namespace Domain.TextProcessing.Implementation
             (@"^(?<extract>.+\?).*$", "${extract}", "${extract}"),
             (@"^(?<extract>.+\!).*$", "${extract}", "${extract}"),
         };
+
+        private IEnumerable<ITwoWaySplitter> Rules { get; } = Enumerable.Empty<ITwoWaySplitter>();
 
         public IEnumerable<string> Execute(IEnumerable<string> text) => 
             text.SelectMany(this.Break);
@@ -24,22 +26,15 @@ namespace Domain.TextProcessing.Implementation
             while (remaining.Length > 0)
             {
                 (string extracted, string rest) =
-                    this.FindShortestExtractionRule(this.Rules, remaining)
-                        .Select(tuple => (
-                            extracted: tuple.extracted, 
-                            removedLength: tuple.remove.Length))
-                        .Select(tuple => (
-                            extracted: tuple.extracted, 
-                            remaining: remaining.Substring(tuple.removedLength).Trim()))
-                        .DefaultIfEmpty((extracted: remaining, remaining: string.Empty))
-                        .First();
+                    this.FindShortestExtractionRule(this.RuleSpecs, remaining).First()
+                        ;
 
                 yield return extracted;
                 remaining = rest;
             }
         }
 
-        private IEnumerable<(string extracted, string remove)> FindShortestExtractionRule(
+        private IEnumerable<(string left, string right)> FindShortestExtractionRule(
             IEnumerable<(string pattern, string extractPattern, string removePattern)> rules, 
             string text) =>
             rules
@@ -56,6 +51,30 @@ namespace Domain.TextProcessing.Implementation
                 .Select(rule => (
                     extracted: rule.pattern.Replace(text, rule.extractPattern), 
                     remove: rule.pattern.Replace(text, rule.removePattern)))
-                .WithMinimumOrEmpty(tuple => tuple.remove.Length);
+                .Select(tuple => (
+                    extracted: tuple.extracted, 
+                    removedLength: tuple.remove.Length))
+                .Select(tuple => (
+                    left: tuple.extracted, 
+                    right: text.Substring(tuple.removedLength).Trim()))
+                .Concat(Rules.SelectMany(rule => rule.ApplyTo(text)))
+                .DefaultIfEmpty((left: text, right: string.Empty))
+                .WithMinimumOrEmpty(tuple => tuple.left.Length);
+    }
+
+    internal class RegexSplitter : ITwoWaySplitter
+    {
+        public RegexSplitter(Regex pattern)
+        {
+            Pattern = pattern;
+        }
+
+        private Regex Pattern { get; }
+        public IEnumerable<(string left, string right)> ApplyTo(string line)
+        {
+
+        
+        throw new NotImplementedException();
+        }
     }
 }
