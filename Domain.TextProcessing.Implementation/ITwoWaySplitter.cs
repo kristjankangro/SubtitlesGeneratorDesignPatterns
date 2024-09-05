@@ -1,6 +1,6 @@
 namespace Domain.TextProcessing.Implementation;
 
-interface ITwoWaySplitter
+public interface ITwoWaySplitter
 {
     IEnumerable<(string left, string right)> ApplyTo(string line);
 }

@@ -21,6 +21,10 @@ internal class RegexSplitter : ITwoWaySplitter
             match => match.Groups["right"].Value
         );
 
+    public static ITwoWaySplitter LeftExtractor(string pattern) =>
+        new RegexSplitter(new Regex(pattern), match => match.Groups["left"].Value,
+            _ => "");
+    
     public IEnumerable<(string left, string right)> ApplyTo(string line) => 
         Pattern.Matches(line).Select(match => (ExtractLeft(match), ExtractRight(match)));
 }
