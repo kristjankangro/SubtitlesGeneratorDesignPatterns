@@ -8,8 +8,9 @@ public class SubtitlesToSrtWriter : ISubtitlesVisitor
         LastOrdinal = 0;
     }
 
-    private ITextWriter Destination { get;  } 
+    private ITextWriter Destination { get; }
     private int LastOrdinal { get; set; }
+
     public void Visit(SubtitleLine line)
     {
         Destination.AppendLine(
@@ -17,7 +18,5 @@ public class SubtitlesToSrtWriter : ISubtitlesVisitor
             $"{line.BeginOffset:hh\\:mm\\:ss\\,fff} --> {line.EndOffset:hh\\:mm\\:ss\\,fff}",
             $"{line.Content}",
             string.Empty);
-       
-        throw new NotImplementedException();
     }
 }
