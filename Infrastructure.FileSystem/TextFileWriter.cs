@@ -15,4 +15,9 @@ public class TextFileWriter : ITextWriter
     {
         File.WriteAllLines(Destination.FullName, lines, Encoding.UTF8);
     }
+
+    public void AppendLine(params string[] lines)
+    {
+        File.AppendAllLines(Destination.FullName, lines);
+    }
 }

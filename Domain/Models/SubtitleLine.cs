@@ -1,17 +1,15 @@
-﻿namespace Domain.Models
+namespace Domain.Models;
+
+public class SubtitleLine
 {
-    public class SubtitleLine
+    public SubtitleLine(TimeSpan beginOffset, TimeSpan endOffset, string content)
     {
-        public string Content { get; }
-        public TimeSpan Duration { get; }
-
-        public SubtitleLine(string content, TimeSpan duration)
-        {
-            this.Content = content.Trim();
-            this.Duration = duration;
-        }
-
-        public override string ToString() =>
-            $"{this.Duration} --> {this.Content}";
+        BeginOffset = beginOffset;
+        EndOffset = endOffset;
+        Content = content ?? string.Empty;
     }
+
+    public TimeSpan BeginOffset { get;  }
+    public TimeSpan EndOffset { get;  }
+    public string Content { get;  }
 }

@@ -12,9 +12,9 @@ namespace Domain
             Text = text;
         }
 
-        public IEnumerable<SubtitleLine> MeasureLines() => MeasureLines(GetFullTextWeight());
+        public IEnumerable<TimedLine> MeasureLines() => MeasureLines(GetFullTextWeight());
 
-        private IEnumerable<SubtitleLine> MeasureLines(double fullTextWeight) =>
+        private IEnumerable<TimedLine> MeasureLines(double fullTextWeight) =>
             Text.Content
                 .Select(line => (
                     line: line,
@@ -22,7 +22,7 @@ namespace Domain
                 .Select(tuple => (
                     line: tuple.line,
                     milliseconds: Text.Duration.TotalMilliseconds * tuple.relativeWeight))
-                .Select(tuple => new SubtitleLine(tuple.line, TimeSpan.FromMilliseconds(tuple.milliseconds)));
+                .Select(tuple => new TimedLine(tuple.line, TimeSpan.FromMilliseconds(tuple.milliseconds)));
         
         private double GetFullTextWeight() => Text.Content.Sum(CountReadableLetters);
         

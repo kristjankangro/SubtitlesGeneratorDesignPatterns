@@ -33,7 +33,7 @@ namespace SubtitlesConverter.Presentation
                     .Using(new SentenceBreaker())
                     .Using(new LinesBreaker(95,45))
                     .Build();
-                subtitles.SaveAsSrt(new TextFileWriter(destination));
+                subtitles.Accept(new SubtitlesToSrtWriter(new TextFileWriter(destination)));
             }
             catch (Exception ex)
             {
