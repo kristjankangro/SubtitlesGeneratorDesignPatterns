@@ -7,36 +7,26 @@ namespace Domain.TextProcessing.Implementation
     {
         private readonly int MaxBreakLength;
         private readonly int MinBreakLenght;
+        private IEnumerable<ITwoWaySplitter> Rules { get; }
+
         public LinesBreaker(int maxBreakLength, int minBreakLenght)
         {
             MaxBreakLength = maxBreakLength;
             MinBreakLenght = minBreakLenght;
+            //todo 
+            Rules = new[]
+            {
+                WordBoundarySplitter.AtPunctuation(", ")
+                    .Append(WordBoundarySplitter.AtPunctuation("; "))
+                    .Append(WordBoundarySplitter.AtPunctuation(" - ")),
+                WordBoundarySplitter.BeforeWord(" and ")
+                    .Append(WordBoundarySplitter.BeforeWord(" or ")),
+                WordBoundarySplitter.BeforeWord(" to ")
+                    .Append(WordBoundarySplitter.BeforeWord(" then ")),
+                WordBoundarySplitter.AtPunctuation(" ")
+            };
         }
 
-        private IEnumerable<(string separatorPattern, string appendLeft, string prependRight)[]> 
-            Rules { get; } = new []
-        {
-            new[] 
-            {            
-                (", ", "...", "... "),
-                ("; ", "...", "... "),
-                (" - ", "...", "... "),
-            },
-            new[] 
-            {            
-                (" and ", "...", "... and "),
-                (" or ", "...", "... or "),
-            },
-            new[] 
-            {            
-                (" to ", "...", "... to "),
-                (" then ", "...", "... then "),
-            },
-            new[] 
-            {            
-                (" ", "...", "... ")
-            },
-        };
 
         public IEnumerable<string> Execute(
             IEnumerable<string> text) =>
@@ -55,7 +45,7 @@ namespace Domain.TextProcessing.Implementation
                 }
 
                 bool broken = false;
-                foreach ((string separator, string toLeft, string toRight)[] rules in this.Rules)
+                foreach (IEnumerable<ITwoWaySplitter> rules in this.Rules)
                 {
                     IEnumerable<(string left, string right)> split =
                         this.TryBreakLongLine(remaining, rules)
@@ -80,20 +70,18 @@ namespace Domain.TextProcessing.Implementation
         }
 
         private IEnumerable<(string left, string right)> TryBreakLongLine(
-            string line, 
-            IEnumerable<(string separatorPattern, string appendLeft, string prependRight)> rules) =>
+            string line,
+            IEnumerable<ITwoWaySplitter> rules) =>
             rules.SelectMany(rule => this.Break(line, rule))
                 .WithMinimumOrEmpty(split => MaxBreakLength - split.left.Length);
 
-        private IEnumerable<(string left, string right)> Break(
-            string line, 
-            (string separatorPattern, string appendLeft, string prependRight) rule) => 
+        private IEnumerable<(string left, string right)> Break(string line, ITwoWaySplitter rule) =>
             new Regex(rule.separatorPattern).Matches(line)
                 .Select(match => (
-                    left: line.Substring(0, match.Index) + rule.appendLeft, 
+                    left: line.Substring(0, match.Index) + rule.appendLeft,
                     right: rule.prependRight + line.Substring(match.Index + match.Length)))
-                .Where(split => 
-                    MinBreakLenght <= split.left.Length && 
+                .Where(split =>
+                    MinBreakLenght <= split.left.Length &&
                     split.left.Length <= MaxBreakLength);
     }
 }
