@@ -1,15 +1,20 @@
-﻿namespace Domain.TextProcessing.Implementation;
+﻿using Domain.TextProcessing.Implementation.Rules;
+using SubtitlesConverter.Domain.TextProcessing.Implementation.Rules;
 
-public class SentenceBreaker : RuleBasedProcessor
+namespace Domain.TextProcessing.Implementation
 {
-    protected override IMultiwaySplitter Splitter { get; } = new []
-        {
-            RegexSplitter.LeftAndRightExtractor(@"^(?<left>[^\?*]+\?)\s*(?<right>.*)$"),
-            RegexSplitter.LeftAndRightExtractor(@"^(?<left>[^\!*]+\!)\s*(?<right>.*)$"),
-            RegexSplitter.LeftAndRightExtractor(@"^(?<left>(?:(?:\.\.\.)|[^\.])+)\.\s*(?<right>.*)$"),
-            RegexSplitter.LeftAndRightExtractor(@"(?<left>^.*\.\.\.)(?=(?:\s+\p{Lu})|(?:\s+\p{Lt})|\s*$)\s*(?<right>.*)$"),
-            RegexSplitter.LeftExtractor(@"^(?<left>.*(?<!\.))\.(?=$)(?<right>)$"),
-            RegexSplitter.LeftExtractor(@"^(?<left>.*)(?:[\:\;\,]|\s+-\s*)(?<right>)$"),
-        }.WithShortestLeft()
-        .Repeat();
+    public class SentencesBreaker : RuleBasedProcessor
+    {
+        protected override IMultiwaySplitter Splitter { get; } = 
+            RegexSplitter.LeftAndRightExtractor(@"^(?<left>[^\?*]+\?)\s*(?<right>.*)$")
+                .Append(RegexSplitter.LeftAndRightExtractor(@"^(?<left>[^\!*]+\!)\s*(?<right>.*)$"))
+                .Append(RegexSplitter.LeftAndRightExtractor(@"^(?<left>(?:(?:\.\.\.)|[^\.])+)\.\s*(?<right>.*)$"))
+                .Append(RegexSplitter.LeftAndRightExtractor(
+                    @"(?<left>^.*\.\.\.)(?=(?:\s+\p{Lu})|(?:\s+\p{Lt})|\s*$)\s*(?<right>.*)$"))
+                .Append(RegexSplitter.LeftExtractor(@"^(?<left>.*(?<!\.))\.$"))
+                .Append(RegexSplitter.LeftExtractor(@"^(?<left>.*)(?:[\:\;\,]|\s+-\s*)$"))
+                .Append(new PassThroughSplitter())
+                .WithShortestLeft()
+                .Repeat();
+    }
 }

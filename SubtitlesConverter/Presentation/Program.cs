@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Domain;
 using Domain.Models;
 using Domain.TextProcessing.Implementation;
@@ -20,7 +19,7 @@ namespace SubtitlesConverter.Presentation
             Console.WriteLine(UsageText);
 
         static bool Verify(string[] args) =>
-            args.Length == 3 &&
+            args.Length == 2 &&
             File.Exists(args[0]);
 
         static void Process(FileInfo source, FileInfo destination)
@@ -30,10 +29,12 @@ namespace SubtitlesConverter.Presentation
                 var subtitles = new SubtitlesBuilder()
                     .For(new TextFileReader(source))
                     .Using(new LinesTrimmer())
-                    .Using(new SentenceBreaker())
-                    .Using(new LinesBreaker(95,45))
+                    .Using(new SentencesBreaker())
+                    .Using(new LinesBreaker(95, 45))
                     .Build();
+
                 subtitles.Accept(new SubtitlesToSrtWriter(new TextFileWriter(destination)));
+                
             }
             catch (Exception ex)
             {
@@ -41,7 +42,7 @@ namespace SubtitlesConverter.Presentation
             }
         }
 
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             if (Verify(args))
                 Process(new FileInfo(args[0]), new FileInfo(args[1]));

@@ -2,14 +2,14 @@
 
 namespace Domain.TextProcessing.Implementation.Rules
 {
-    internal class ShortestLeftWins : ITwoWaySplitter
+    internal class LongestLeftWins : ITwoWaySplitter
     {
         private ITwoWaySplitter Splitter { get; }
-     
-        public ShortestLeftWins(ITwoWaySplitter splitter) => this.Splitter = splitter;
+        
+        public LongestLeftWins(ITwoWaySplitter splitter) => this.Splitter = splitter;
 
         public IEnumerable<(string left, string right)> ApplyTo(string line)
             => this.Splitter.ApplyTo(line)
-                .WithMinimumOrEmpty(tuple => tuple.left.Length);
+                .WithMaximumOrEmpty(tuple => tuple.left.Length);
     }
 }
