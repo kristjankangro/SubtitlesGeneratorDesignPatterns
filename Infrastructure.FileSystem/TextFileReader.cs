@@ -1,64 +1,62 @@
 using System.Text;
 using System.Text.RegularExpressions;
+using Domain;
 using Domain.Models;
 
-namespace Domain;
+namespace Infrastructure.FileSystem;
 
 public class TextFileReader : ITextReader
 {
-    public TextFileReader(FileInfo source)
-    {
-        Source = source;
-    }
+    public IEnumerable<TimedText> Read() => this.ParseSource();
 
-    public TimedText Read() => ParseSource();
     private FileInfo Source { get; }
 
-    private TimedText ParseSource()
-    {
-        if (Source is null) return TimedText.Empty;
-        TimeSpan? initTimespan = null;
-        TimeSpan? finalTimespan = null;
-        List<string> content = new List<string>();
-        bool beginsTimestamp = true;
-        bool endsTimestamp = false;
+    public TextFileReader(FileInfo source) => Source = source;
 
-        foreach (string line in File.ReadAllLines(Source.FullName, Encoding.UTF8))
+    private IEnumerable<TimedText> ParseSource()
+    {
+        if (this.Source is null) yield break;
+
+        IList<string> pendingLines = new List<string>();
+        TimeSpan lastKnownTime = TimeSpan.Zero;
+
+        foreach (string line in File.ReadAllLines(this.Source.FullName, Encoding.UTF8))
         {
-            if (Parse(line) is TimeSpan time)
+            if (this.Parse(line) is TimeSpan time)
             {
-                initTimespan = initTimespan ?? time;
-                finalTimespan = time;
-                endsTimestamp = true;
+                if (pendingLines.Any())
+                {
+                    TimeSpan duration = time - lastKnownTime;
+                    yield return new TimedText(pendingLines, lastKnownTime, duration);
+                    pendingLines.Clear();
+                }
+                lastKnownTime = time;
             }
             else
             {
-                content.Add(line);
-                beginsTimestamp = beginsTimestamp && initTimespan.HasValue;
-                endsTimestamp = false;
+                string trimmed = line.Trim();
+                if (trimmed.Length > 0)
+                    pendingLines.Add(line);
             }
         }
 
-        if (!beginsTimestamp || !endsTimestamp)
-        {
-            throw new InvalidOperationException("source file structure is incorrect");
-        }
-
-        TimeSpan duration = finalTimespan.Value.Subtract(initTimespan.Value);
-        return new TimedText(content, duration);
+        if (pendingLines.Any())
+            throw new InvalidOperationException("Input text must end in a timestamp.");
     }
 
     private object Parse(string line)
     {
-        Regex timePattern = new Regex(@"^\s*(?<minutes>\d+):(?<seconds>\d+)\s*$");
+        Regex timePattern = new Regex(@"^\s*(?<minutes>\d+):(?<seconds>\d+)(?:\.(?<fractional>\d{1,3}))?\s*$");
         Match match = timePattern.Match(line);
 
         if (!match.Success) return line;
 
         int minutes = int.Parse(match.Groups["minutes"].Value);
         int seconds = int.Parse(match.Groups["seconds"].Value);
+        int milliseconds = match.Groups["fractional"].Success
+            ? int.Parse(match.Groups["fractional"].Value.PadRight(3, '0'))
+            : 0;
 
-        return new TimeSpan(0, minutes, seconds);
-
+        return new TimeSpan(0, 0, minutes, seconds, milliseconds);
     }
 }

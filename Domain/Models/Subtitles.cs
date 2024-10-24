@@ -1,21 +1,25 @@
-﻿using System.Text;
-
-namespace Domain.Models
+﻿namespace Domain.Models
 {
     public class Subtitles
     {
-        private IEnumerable<TimedLine> Lines { get; }
+        private IList<SubtitleLine> Lines { get; }
 
-        public Subtitles(IEnumerable<TimedLine> lines) => Lines = lines.ToList();
-
+        public void Append(IEnumerable<TimedLine> lines, TimeSpan offset)
+        {
+            var begin = offset;
+            foreach (var line in lines)
+            {
+                var end = begin + line.Duration;
+                this.Lines.Add(new SubtitleLine(begin, end, line.Content));
+                begin = end;
+            }
+        }
+        
         public void Accept(ISubtitlesVisitor visitor)
         {
-            TimeSpan begin = new TimeSpan(0);
-            foreach (TimedLine line in Lines)
+            foreach (var line in Lines)
             {
-                TimeSpan end = begin + line.Duration;
-                visitor.Visit(new SubtitleLine(begin, end, line.Content));
-                begin = end;
+                visitor.Visit(line);
             }
         }
 

@@ -1,5 +1,3 @@
-using System.Text;
-using System.Text.RegularExpressions;
 using Domain.Models;
 
 namespace Domain;
@@ -8,10 +6,8 @@ internal class TextReader : ITextReader
 {
     public static ITextReader Empty { get; } = new TextReader();
 
-    private TextReader()
-    {
-    }
+    private TextReader() { }
 
-    public TimedText Read() => TimedText.Empty;
+    public IEnumerable<TimedText> Read() => Enumerable.Empty<TimedText>();
     
 }

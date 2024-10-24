@@ -4,6 +4,7 @@ using System.Reflection;
 using Domain;
 using Domain.Models;
 using Domain.TextProcessing.Implementation;
+using Infrastructure.FileSystem;
 using static Domain.TextProcessing.Implementation.LinesTrimmer;
 using static Domain.TextProcessing.Implementation.SpecialLettersFilter;
 

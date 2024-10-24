@@ -4,5 +4,5 @@ namespace Domain;
 
 public interface ITextReader
 {
-    TimedText Read();
+    IEnumerable<TimedText> Read();
 }
