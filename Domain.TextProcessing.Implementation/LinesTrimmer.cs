@@ -1,12 +1,15 @@
-using Domain.TextProcessing;
+using Domain.TextProcessing.Implementation.LineProcessing;
 
-namespace SubtitlesConverter.Domain.TextProcessing.Implementation
+namespace Domain.TextProcessing.Implementation;
+
+public class LinesTrimmer
 {
-    public class LinesTrimmer : ITextProcessor
-    {
-        public IEnumerable<string> Execute(IEnumerable<string> text) =>
-            text
-                .Select(line => line.Trim())
-                .Where(line => line.Length > 0);
-    }
+    public static ITextProcessor RemoveWhiteSpace()
+        => new Trim().AsTextProcessor();
+
+    public static ITextProcessor RemoveLineEndings()
+        => new Trim()
+            .Append(RegexRule.LineExtractor(@"^(?<line>.*)\.(?<!\.\.)$"))
+            .Append(RegexRule.LineExtractor(@"^(?<line>.*)(?:[\:\;\,]| -)$"))
+            .AsTextProcessor();
 }

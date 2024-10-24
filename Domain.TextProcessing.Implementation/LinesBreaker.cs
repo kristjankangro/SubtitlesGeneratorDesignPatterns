@@ -1,5 +1,5 @@
 ﻿using Domain.TextProcessing.Implementation.Rules;
-using SubtitlesConverter.Domain.TextProcessing.Implementation.Rules;
+using Domain.TextProcessing.Implementation.Splitters;
 
 namespace Domain.TextProcessing.Implementation
 {

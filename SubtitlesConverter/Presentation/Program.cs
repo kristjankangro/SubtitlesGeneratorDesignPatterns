@@ -4,7 +4,8 @@ using System.Reflection;
 using Domain;
 using Domain.Models;
 using Domain.TextProcessing.Implementation;
-using SubtitlesConverter.Domain.TextProcessing.Implementation;
+using static Domain.TextProcessing.Implementation.LinesTrimmer;
+using static Domain.TextProcessing.Implementation.SpecialLettersFilter;
 
 namespace SubtitlesConverter.Presentation
 {
@@ -15,12 +16,12 @@ namespace SubtitlesConverter.Presentation
         private static string UsageText =>
             $"{ToolName} <source file>.txt <output file>.srt";
 
-        static void ShowUsage() =>
+        private static void ShowUsage() =>
             Console.WriteLine(UsageText);
 
-        static bool Verify(string[] args) =>
-            args.Length == 2 &&
-            File.Exists(args[0]);
+        private static bool Verify(string[] args)
+            => args.Length == 2
+               && File.Exists(args[0]);
 
         static void Process(FileInfo source, FileInfo destination)
         {
@@ -28,8 +29,10 @@ namespace SubtitlesConverter.Presentation
             {
                 var subtitles = new SubtitlesBuilder()
                     .For(new TextFileReader(source))
-                    .Using(new LinesTrimmer())
+                    .Using(ReplaceSpecialLetters())
+                    .Using(RemoveWhiteSpace())
                     .Using(new SentencesBreaker())
+                    .Using(RemoveLineEndings())
                     .Using(new LinesBreaker(95, 45))
                     .Build();
 

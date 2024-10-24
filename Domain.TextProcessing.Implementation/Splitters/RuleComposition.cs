@@ -1,7 +1,6 @@
-using Domain.TextProcessing.Implementation;
 using Domain.TextProcessing.Implementation.Rules;
 
-namespace SubtitlesConverter.Domain.TextProcessing.Implementation.Rules
+namespace Domain.TextProcessing.Implementation.Splitters
 {
     internal static class RuleComposition
     {
